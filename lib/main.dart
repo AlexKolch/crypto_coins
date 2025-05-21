@@ -18,10 +18,10 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           backgroundColor: Color.fromARGB(255, 31, 31, 31),
           titleTextStyle: TextStyle(
-          color: Colors.white,
-          fontSize: 20,
-          fontWeight: FontWeight.bold 
-        )
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         dividerColor: Colors.white24,
         listTileTheme: const ListTileThemeData(iconColor: Colors.white),
@@ -38,46 +38,86 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const MyHomePage(title: 'Crypto coins'),
+      // home: const CryptoListView(), //иниц уже в routes
+      routes: {
+        //MARK: - Routing
+        '/': (context) => CryptoListView(),
+        '/coin': (context) => CoinView(),
+      },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class CryptoListView extends StatefulWidget {
+  const CryptoListView({super.key});
 
-  final String title;
+  final String title = 'Crypto coins';
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<CryptoListView> createState() => _CryptoListViewState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-
-  void _incrementCounter() {
-    setState(() {
-    });
-  }
-
+class _CryptoListViewState extends State<CryptoListView> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: AppBar(title: Text(widget.title)),
       body: ListView.separated(
         separatorBuilder: (context, index) => const Divider(),
         itemCount: 10, //Кол-во ячеек
-        itemBuilder:
-            (context, index) => ListTile(
-              leading: Image.asset('assets/img/bitcoin.png', width: 25, height: 25),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              title: Text('Bitcoin', style: theme.textTheme.bodyMedium),
-              subtitle: Text('2000\$', style: theme.textTheme.labelSmall)
+        itemBuilder: (context, index) {
+          const coinName = 'Bitcoin';
+          return ListTile(
+            leading: Image.asset(
+              'assets/img/bitcoin.png',
+              width: 25,
+              height: 25,
             ),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            title: Text(coinName, style: theme.textTheme.bodyMedium),
+            subtitle: Text('2000\$', style: theme.textTheme.labelSmall),
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                '/coin',
+                arguments: coinName,
+              ); //Навигация, передаем данные через arguments
+            },
+          );
+        },
       ),
     );
+  }
+}
+
+class CoinView extends StatefulWidget {
+  const CoinView({super.key});
+
+  @override
+  State<CoinView> createState() => _CoinViewState();
+}
+
+class _CoinViewState extends State<CoinView> {
+  String? coinName;
+
+  //Получаем здесь данные для страницы
+  @override
+  void didChangeDependencies() {
+    final args = ModalRoute.of(context)?.settings.arguments;
+    
+    assert(args != null || args is String, 'You must provide String args');
+    if (args == null || args is! String) {
+      return;
+    }
+
+    coinName = args;
+    setState(() {});
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(appBar: AppBar(title: Text(coinName ?? "Unknown")));
   }
 }
