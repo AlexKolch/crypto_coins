@@ -4,6 +4,7 @@ final mainTheme = ThemeData(
         scaffoldBackgroundColor: const Color.fromARGB(255, 31, 31, 31),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber),
         appBarTheme: const AppBarTheme(
+          elevation: 0, //тень, подложка для бара
           backgroundColor: Color.fromARGB(255, 31, 31, 31),
           titleTextStyle: TextStyle(
             color: Colors.white,
