@@ -1,5 +1,7 @@
-import 'package:dio/dio.dart';
+import 'package:crypto_coins/Core/MainScreen/bloc/crypto_list_bloc.dart';
+import 'package:crypto_coins/Theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import '../../../NetworkServices/crypto_coins.dart';
 import 'Exports/widgets.dart';
@@ -14,12 +16,12 @@ class CryptoListView extends StatefulWidget {
 }
 
 class _CryptoListViewState extends State<CryptoListView> {
-  List<CryptoCoin>? _coinsList;
+
+  final _listBloc = CryptoListBloc(GetIt.I<AbstractCoinsRepository>());
 
   @override
   void initState() {
-    _loadCoins();
-    setState(() {});
+    _listBloc.add(LoadCryptoList());
     super.initState();
   }
 
@@ -27,24 +29,30 @@ class _CryptoListViewState extends State<CryptoListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
-      body:
-          (_coinsList == null)
-              ? //если массив пуст показать Progress, в противном ListView
-              const Center(child: CircularProgressIndicator())
-              : ListView.separated(
-                padding: EdgeInsets.only(top: 16),
-                separatorBuilder: (context, index) => const Divider(),
-                itemCount: _coinsList!.length, //Кол-во ячеек
-                itemBuilder: (context, index) {
-                  final coin = _coinsList![index]; //достаем монету из массива
-                  return Cell(coin: coin);
-                },
+      body: BlocBuilder<CryptoListBloc, CryptoListState>(
+        bloc: _listBloc,
+        builder: (context, state) {
+          if(state is CryptoListLoaded) {
+           return ListView.separated(
+            padding: EdgeInsets.only(top: 16),
+            separatorBuilder: (context, index) => const Divider(),
+            itemCount: state.coinsList.length, //Кол-во ячеек
+            itemBuilder: (context, index) {
+              final coin = state.coinsList[index]; //достаем монету из массива
+              return Cell(coin: coin);
+            },
+          );
+          }
+          if (state is CryptoListLoadingFailure) {
+            return Center(
+              child: Text("Something is wrong",
+             
               ),
+              );
+          }
+          return const Center(child: CircularProgressIndicator()); //если массив пуст показать Progress
+        },
+      ),
     );
-  }
-
-  Future<void> _loadCoins() async {
-     _coinsList = await GetIt.I<AbstractCoinsRepository>().getCoins();
-    setState(() {}); //это заменить потом
   }
 }
