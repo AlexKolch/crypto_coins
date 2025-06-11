@@ -1,6 +1,7 @@
-import 'package:crypto_coins/Core/Models/crypto_coin.dart';
-import 'package:crypto_coins/NetworkServices/network_manager.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import '../../../NetworkServices/crypto_coins.dart';
 import 'Exports/widgets.dart';
 
 class CryptoListView extends StatefulWidget {
@@ -43,7 +44,7 @@ class _CryptoListViewState extends State<CryptoListView> {
   }
 
   Future<void> _loadCoins() async {
-     _coinsList = await NetworkManager().getCoins();
-    // setState(() {});
+     _coinsList = await GetIt.I<AbstractCoinsRepository>().getCoins();
+    setState(() {}); //это заменить потом
   }
 }
