@@ -11,7 +11,7 @@ class Cell extends StatelessWidget {
     final theme = Theme.of(context);
     final coinDetails = coin.details;
     return ListTile(
-      leading: Image.network(coinDetails.imageUrl),
+      leading: Image.network(coinDetails.fullImageUrl),
       trailing: const Icon(Icons.arrow_forward_ios),
       title: Text(coin.name, style: theme.textTheme.bodyMedium),
       subtitle: Text(

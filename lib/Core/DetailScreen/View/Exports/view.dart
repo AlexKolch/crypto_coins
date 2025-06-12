@@ -1,1 +1,1 @@
-export '../coin_detail.dart';
+export '../coin_detail_screen.dart';

@@ -7,36 +7,40 @@ import '../Block/crypto_coin_details_bloc.dart';
 import 'widgets/widgets.dart';
 
 class CoinDetailView extends StatefulWidget {
-  final CryptoCoin coin;
+  const CoinDetailView({
+    super.key,
+    //  required this.coin
+  });
 
-  const CoinDetailView({super.key, required this.coin});
+  // final CryptoCoin coin;
 
   @override
   State<CoinDetailView> createState() => _CoinDetailViewState();
 }
 
 class _CoinDetailViewState extends State<CoinDetailView> {
-  
-    final _coinDetailsBloc = CryptoCoinDetailsBloc(
+  CryptoCoin? coin;
+
+  final _coinDetailsBloc = CryptoCoinDetailsBloc(
     GetIt.I<AbstractCoinsRepository>(),
   );
 
-@override
-  void initState() {
-    _coinDetailsBloc.add(LoadCryptoCoinDetails(currencyCode: widget.coin.name));
-    super.initState();
-  }
-  // @override //Получаем здесь данные для страницы
-  // void didChangeDependencies() {
-  //   final args = ModalRoute.of(context)?.settings.arguments;
-  //   assert(args != null || args is String, 'You must provide String args');
-  //   if (args == null || args is! String) {
-  //     return;
-  //   }
-  //   coinName = args;
-  //   setState(() {});
-  //   super.didChangeDependencies();
+  // @override
+  // void initState() {
+  //   _coinDetailsBloc.add(LoadCryptoCoinDetails(currencyCode: widget.coin.name));
+  //   super.initState();
   // }
+
+  @override //Получаем здесь данные для страницы
+  void didChangeDependencies() {
+    final args = ModalRoute.of(context)?.settings.arguments;
+
+    assert(args != null || args is CryptoCoin, 'You must provide String args');
+
+    coin = args as CryptoCoin;
+    _coinDetailsBloc.add(LoadCryptoCoinDetails(currencyCode: coin!.name));
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,10 +108,7 @@ class _CoinDetailViewState extends State<CoinDetailView> {
 }
 
 class _DataRow extends StatelessWidget {
-  const _DataRow({
-    required this.title,
-    required this.value,
-  });
+  const _DataRow({required this.title, required this.value});
 
   final String title;
   final String value;
@@ -120,9 +121,7 @@ class _DataRow extends StatelessWidget {
       children: [
         SizedBox(width: 140, child: Text(title)),
         const SizedBox(width: 32),
-        Flexible(
-          child: Text(value),
-        ),
+        Flexible(child: Text(value)),
       ],
     );
   }

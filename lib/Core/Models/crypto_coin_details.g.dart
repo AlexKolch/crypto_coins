@@ -9,7 +9,9 @@ part of 'crypto_coin_details.dart';
 CryptoCoinDetails _$CryptoCoinDetailsFromJson(Map<String, dynamic> json) =>
     CryptoCoinDetails(
       toSymbol: json['TOSYMBOL'] as String,
-      lastUpdate: DateTime.parse(json['LASTUPDATE'] as String),
+      lastUpdate: CryptoCoinDetails._dateTimeFromJson(
+        (json['LASTUPDATE'] as num).toInt(),
+      ),
       hight24Hour: (json['HIGH24HOUR'] as num).toDouble(),
       low24Hours: (json['LOW24HOUR'] as num).toDouble(),
       priceInUSD: (json['PRICE'] as num).toDouble(),
@@ -19,7 +21,7 @@ CryptoCoinDetails _$CryptoCoinDetailsFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$CryptoCoinDetailsToJson(CryptoCoinDetails instance) =>
     <String, dynamic>{
       'TOSYMBOL': instance.toSymbol,
-      'LASTUPDATE': instance.lastUpdate.toIso8601String(),
+      'LASTUPDATE': CryptoCoinDetails._dateTimeToJson(instance.lastUpdate),
       'HIGH24HOUR': instance.hight24Hour,
       'LOW24HOUR': instance.low24Hours,
       'PRICE': instance.priceInUSD,

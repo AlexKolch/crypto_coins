@@ -1,1 +1,1 @@
-export '../crypto_list.dart';
+export '../crypto_list_screen.dart';

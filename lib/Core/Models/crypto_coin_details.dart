@@ -26,7 +26,7 @@ class CryptoCoinDetails extends Equatable {
   @JsonKey(name: 'IMAGEURL')
   final String imageUrl;
 
-  String get fullImageUrl => 'https://www.cryptocompare.com/$imageUrl';
+  String get fullImageUrl => 'https://www.cryptocompare.com$imageUrl';
 
   CryptoCoinDetails({
     required this.toSymbol,
