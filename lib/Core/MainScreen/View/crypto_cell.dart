@@ -9,13 +9,13 @@ class Cell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final coinDetails = coin.details;
     return ListTile(
-      leading: Image.network(coin.imageURL),
-      //  Image.asset('assets/img/bitcoin.png', width: 25, height: 25),
+      leading: Image.network(coinDetails.imageUrl),
       trailing: const Icon(Icons.arrow_forward_ios),
       title: Text(coin.name, style: theme.textTheme.bodyMedium),
       subtitle: Text(
-        '${coin.priceWithUSD} \$',
+        '${coinDetails.priceInUSD} \$',
         style: theme.textTheme.labelSmall,
       ),
       onTap: () {
