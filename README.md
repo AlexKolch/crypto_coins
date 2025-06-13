@@ -1,16 +1,19 @@
 # crypto_coins
 
-A new Flutter project.
+Crypto market platform.
 
-## Getting Started
+Receive data about crypto market. 
 
-This project is a starting point for a Flutter application.
+Used in a project:
 
-A few resources to get you started if this is your first Flutter project:
+* Flutter
+* Dio
+* REST API, JSON (json_serializable) 
+* Dependency injection (Get_It)
+* Bloc, Equatable
+* Hive
+* AutoRoute
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+![Image alt](https://github.com/AlexKolch/crypto_coins/blob/main/screen/1.jpg)
+![Image alt](https://github.com/AlexKolch/crypto_coins/blob/main/screen/2.jpg)
