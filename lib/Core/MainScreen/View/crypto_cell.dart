@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:crypto_coins/Core/Models/crypto_coin.dart';
+import 'package:crypto_coins/Router/router.dart';
 import 'package:flutter/material.dart';
 
 class Cell extends StatelessWidget {
@@ -19,11 +21,9 @@ class Cell extends StatelessWidget {
         style: theme.textTheme.labelSmall,
       ),
       onTap: () {
-        Navigator.of(context).pushNamed(
-          '/coin',
-          arguments: coin,
-        ); //Навигация, передаем данные через arguments
-      },
+        AutoRouter.of(context).push(CoinDetailRoute(coin: coin)); //навигация через AutoRouter
+        // Navigator.of(context).pushNamed('/coin', arguments: coin); //Навигация, передаем данные через arguments
+      }, 
     );
   }
 }

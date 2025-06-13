@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:crypto_coins/Core/Models/crypto_coin.dart';
 import 'package:crypto_coins/NetworkServices/abstract_coins_repository.dart';
 import 'package:flutter/material.dart';
@@ -6,41 +7,41 @@ import 'package:get_it/get_it.dart';
 import '../Block/crypto_coin_details_bloc.dart';
 import 'widgets/widgets.dart';
 
+@RoutePage()
 class CoinDetailView extends StatefulWidget {
   const CoinDetailView({
     super.key,
-    //  required this.coin
+     required this.coin
   });
 
-  // final CryptoCoin coin;
+  final CryptoCoin coin;
 
   @override
   State<CoinDetailView> createState() => _CoinDetailViewState();
 }
 
 class _CoinDetailViewState extends State<CoinDetailView> {
-  CryptoCoin? coin;
+  // CryptoCoin? coin;
 
   final _coinDetailsBloc = CryptoCoinDetailsBloc(
     GetIt.I<AbstractCoinsRepository>(),
   );
 
-  // @override
-  // void initState() {
-  //   _coinDetailsBloc.add(LoadCryptoCoinDetails(currencyCode: widget.coin.name));
-  //   super.initState();
-  // }
-
-  @override //Получаем здесь данные для страницы
-  void didChangeDependencies() {
-    final args = ModalRoute.of(context)?.settings.arguments;
-
-    assert(args != null || args is CryptoCoin, 'You must provide String args');
-
-    coin = args as CryptoCoin;
-    _coinDetailsBloc.add(LoadCryptoCoinDetails(currencyCode: coin!.name));
-    super.didChangeDependencies();
+  @override
+  void initState() {
+    //для AutoRouter 
+    _coinDetailsBloc.add(LoadCryptoCoinDetails(currencyCode: widget.coin.name));
+    super.initState();
   }
+
+  // @override //Получаем здесь данные для страницы
+  // void didChangeDependencies() {
+  //   final args = ModalRoute.of(context)?.settings.arguments;
+  //   assert(args != null || args is CryptoCoin, 'You must provide String args');
+  //   coin = args as CryptoCoin;
+  //   _coinDetailsBloc.add(LoadCryptoCoinDetails(currencyCode: coin!.name));
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
