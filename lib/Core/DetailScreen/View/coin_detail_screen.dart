@@ -74,7 +74,7 @@ class _CoinDetailViewState extends State<CoinDetailView> {
                   BaseCard(
                     child: Center(
                       child: Text(
-                        '${coinDetails.priceInUSD} \$',
+                        '${coinDetails.priceInUSD.toStringAsFixed(3)} \$',
                         style: const TextStyle(
                           fontSize: 26,
                           fontWeight: FontWeight.w700,
@@ -87,12 +87,12 @@ class _CoinDetailViewState extends State<CoinDetailView> {
                       children: [
                         _DataRow(
                           title: 'Hight 24 Hour',
-                          value: '${coinDetails.hight24Hour} \$',
+                          value: '${coinDetails.hight24Hour.toStringAsFixed(3)} \$',
                         ),
                         const SizedBox(height: 6),
                         _DataRow(
                           title: 'Low 24 Hour',
-                          value: '${coinDetails.low24Hours} \$',
+                          value: '${coinDetails.low24Hours.toStringAsFixed(3)} \$',
                         ),
                       ],
                     ),

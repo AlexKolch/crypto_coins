@@ -35,12 +35,14 @@ class NetworkManager implements AbstractCoinsRepository {
 
   Future<List<CryptoCoin>> _fetchDataFromAPI() async {
     final response = await dio.get(
-      'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,BNB,AID&tsyms=USD',
+      'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,BNB,SOL,USDC,XRP,DOGE,SUI,BNB,AAVE,AID&tsyms=USD',
+      // 'https://min-api.cryptocompare.com/data/top/totalvolfull?limit=15&tsym=USD'
     );
     // debugPrint(response.toString());
 
     final data = response.data as Map<String, dynamic>;
     final dataRaw = data['RAW'] as Map<String, dynamic>;
+     
     final dataCoinsList =
         dataRaw.entries.map((e) {
           final usdData =
@@ -48,6 +50,7 @@ class NetworkManager implements AbstractCoinsRepository {
           final details = CryptoCoinDetails.fromJson(usdData);
           return CryptoCoin(name: e.key, details: details);
         }).toList();
+        
     return dataCoinsList;
   }
 

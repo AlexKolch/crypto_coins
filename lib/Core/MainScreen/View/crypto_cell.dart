@@ -17,7 +17,7 @@ class Cell extends StatelessWidget {
       trailing: const Icon(Icons.arrow_forward_ios),
       title: Text(coin.name, style: theme.textTheme.bodyMedium),
       subtitle: Text(
-        '${coinDetails.priceInUSD} \$',
+        '${coinDetails.priceInUSD.toStringAsFixed(3)} \$',
         style: theme.textTheme.labelSmall,
       ),
       onTap: () {
